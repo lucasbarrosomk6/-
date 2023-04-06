@@ -1,23 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Grid from "./components/Grid";
+import defaultEncounterData from "./constants.json";
 
 function App() {
+  const [data, setData] = useState(
+    JSON.stringify(defaultEncounterData, null, 2)
+  );
+  const [encounterData, setEncounterData] = useState(defaultEncounterData);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      const parsedData = JSON.parse(data);
+      setEncounterData(parsedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setData(e.target.value);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="input-container">
+        <form onSubmit={handleSubmit}>
+          <textarea
+            className="input"
+            placeholder="Enter encounter data in JSON format"
+            value={data}
+            onChange={handleChange}
+          />
+          <button type="submit" className="submit-button">
+            Submit
+          </button>
+        </form>
+      </div>
+      <div className="grid-container">
+        <Grid data={encounterData} />
+      </div>
     </div>
   );
 }
