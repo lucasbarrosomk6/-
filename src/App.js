@@ -7,7 +7,7 @@ function App() {
     JSON.stringify(defaultEncounterData, null, 2)
   );
   const [encounterData, setEncounterData] = useState(defaultEncounterData);
-
+  console.log({ encounterData });
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
